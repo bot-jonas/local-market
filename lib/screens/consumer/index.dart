@@ -12,13 +12,13 @@ class ConsumerScreen extends StatefulWidget {
 }
 
 class _ConsumerScreenState extends State<ConsumerScreen> {
-  API auth;
+  API api;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<API>(context);
+    api = Provider.of<API>(context);
   }
 
   @override
@@ -48,7 +48,7 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
                               ConsumerConfigurationsScreen()));
                   break;
                 case OptionsMenu.logout:
-                  auth.logout();
+                  api.logout();
 
                   Navigator.pushReplacement(
                     context,

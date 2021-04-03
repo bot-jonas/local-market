@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
 import 'package:provider/provider.dart';
-import 'package:local_market/utils/authentication.dart';
+import 'package:local_market/utils/api.dart';
 
 class EnterpriseConfigurationsScreen extends StatefulWidget {
   @override
@@ -11,13 +11,13 @@ class EnterpriseConfigurationsScreen extends StatefulWidget {
 
 class _EnterpriseConfigurationsScreenState
     extends State<EnterpriseConfigurationsScreen> {
-  Authentication auth;
+  API api;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<Authentication>(context);
+    api = Provider.of<API>(context);
   }
 
   @override

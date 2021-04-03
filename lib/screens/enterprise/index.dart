@@ -12,13 +12,13 @@ class EnterpriseScreen extends StatefulWidget {
 }
 
 class _EnterpriseScreenState extends State<EnterpriseScreen> {
-  API auth;
+  API api;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<API>(context);
+    api = Provider.of<API>(context);
   }
 
   @override
@@ -48,7 +48,7 @@ class _EnterpriseScreenState extends State<EnterpriseScreen> {
                               EnterpriseConfigurationsScreen()));
                   break;
                 case OptionsMenu.logout:
-                  auth.logout();
+                  api.logout();
 
                   Navigator.pushReplacement(
                     context,

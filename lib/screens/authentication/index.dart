@@ -10,7 +10,7 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
-  API auth;
+  API api;
   TextEditingController emailField = TextEditingController();
   TextEditingController passwordField = TextEditingController();
   bool register = false;
@@ -21,7 +21,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<API>(context);
+    api = Provider.of<API>(context);
   }
 
   void handleAccess() async {
@@ -31,7 +31,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       snackbarLocked = true;
       if (!register) {
         // Login
-        var data = await auth.authenticate(
+        var data = await api.authenticate(
             email: emailField.text, password: passwordField.text);
 
         ScaffoldMessenger.of(context)
@@ -50,7 +50,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         }
       } else {
         // Register
-        var data = await auth.register(
+        var data = await api.register(
             email: emailField.text,
             password: passwordField.text,
             userType: isEnterprise ? 'e' : 'c');
@@ -76,11 +76,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     // FIXME: Corrigir esse hack no futuro...
-    if (auth.currentUser != null) {
+    if (api.currentUser != null) {
       var nextScreen;
-      if (auth.currentUser.userType == "c") {
+      if (api.currentUser.userType == "c") {
         nextScreen = ConsumerScreen();
-      } else if (auth.currentUser.userType == "e") {
+      } else if (api.currentUser.userType == "e") {
         nextScreen = EnterpriseScreen();
       }
 

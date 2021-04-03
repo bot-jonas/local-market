@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
 import 'package:provider/provider.dart';
-import 'package:local_market/utils/authentication.dart';
+import 'package:local_market/utils/api.dart';
 
 class ConsumerConfigurationsScreen extends StatefulWidget {
   @override
@@ -11,13 +11,13 @@ class ConsumerConfigurationsScreen extends StatefulWidget {
 
 class _ConsumerConfigurationsScreenState
     extends State<ConsumerConfigurationsScreen> {
-  API auth;
+  API api;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<API>(context);
+    api = Provider.of<API>(context);
   }
 
   @override
