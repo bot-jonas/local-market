@@ -22,6 +22,7 @@ class User {
 
   User.fromJson(Map<String, dynamic> json)
       : email = json['email'],
+        name = json['name'],
         userType = json['user_type'],
         cAddress = json['c_address'],
         eCategory = json['e_category'],
@@ -40,6 +41,7 @@ class API {
   API._internal();
 
   User currentUser;
+  String jwt;
 
   Future<Map<String, dynamic>> register({email, password, userType}) async {
     String url =
@@ -55,6 +57,7 @@ class API {
 
     if (data["OK"]) {
       currentUser = User.fromJson(data["user"]);
+      jwt = data["jwt"];
     }
 
     return data;
@@ -70,6 +73,7 @@ class API {
 
     if (data["OK"]) {
       currentUser = User.fromJson(data["user"]);
+      jwt = data["jwt"];
     }
 
     return data;
@@ -77,5 +81,29 @@ class API {
 
   void logout() {
     currentUser = null;
+    jwt = null;
+  }
+
+  Future<Map<String, dynamic>> updateConsumer({name, address}) async {
+    String url = "https://jonasalves.cf/apis/local_market/update_user";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    Map<String, dynamic> body = {"name": name, "c_address": address};
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser = User.fromJson(data["user"]);
+      }
+
+      return data;
+    }
   }
 }
