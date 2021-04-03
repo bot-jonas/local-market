@@ -27,8 +27,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   void handleAccess() async {
     FocusScope.of(context).unfocus();
 
-    snackbarLocked = false;
-
     if (!snackbarLocked) {
       snackbarLocked = true;
       if (!register) {
