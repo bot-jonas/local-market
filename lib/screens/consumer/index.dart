@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
 import 'package:local_market/screens/consumer/configurations.dart';
 import 'package:provider/provider.dart';
-import 'package:local_market/utils/authentication.dart';
+import 'package:local_market/utils/api.dart';
 
 enum OptionsMenu { configurations, logout }
 
@@ -12,13 +12,13 @@ class ConsumerScreen extends StatefulWidget {
 }
 
 class _ConsumerScreenState extends State<ConsumerScreen> {
-  Authentication auth;
+  API auth;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<Authentication>(context);
+    auth = Provider.of<API>(context);
   }
 
   @override

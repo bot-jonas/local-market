@@ -29,15 +29,15 @@ class User {
         eDeliveryTime = json['e_delivery_time'];
 }
 
-class Authentication {
-  static final Authentication instance = Authentication._internal();
+class API {
+  static final API instance = API._internal();
 
-  factory Authentication() {
+  factory API() {
     // create current user from Shared Prefs
     return instance;
   }
 
-  Authentication._internal();
+  API._internal();
 
   User currentUser;
 
@@ -77,27 +77,5 @@ class Authentication {
 
   void logout() {
     currentUser = null;
-  }
-
-  Future<Map<String, dynamic>> postMethod() async {
-    String url;
-    Map<String, dynamic> headers = {};
-    Map<String, dynamic> body = {};
-
-    HTTP.Response r =
-        await HTTP.post(Uri.parse(url), headers: headers, body: body);
-    Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
-
-    return data;
-  }
-
-  Future<Map<String, dynamic>> getMethod() async {
-    String url;
-    Map<String, dynamic> headers = {};
-
-    HTTP.Response r = await HTTP.get(Uri.parse(url), headers: headers);
-    Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
-
-    return data;
   }
 }

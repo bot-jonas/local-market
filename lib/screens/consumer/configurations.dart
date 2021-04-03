@@ -11,13 +11,13 @@ class ConsumerConfigurationsScreen extends StatefulWidget {
 
 class _ConsumerConfigurationsScreenState
     extends State<ConsumerConfigurationsScreen> {
-  Authentication auth;
+  API auth;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<Authentication>(context);
+    auth = Provider.of<API>(context);
   }
 
   @override

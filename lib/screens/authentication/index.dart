@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_market/screens/consumer/index.dart';
 import 'package:local_market/screens/enterprise/index.dart';
 import 'package:provider/provider.dart';
-import 'package:local_market/utils/authentication.dart';
+import 'package:local_market/utils/api.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
-  Authentication auth;
+  API auth;
   TextEditingController emailField = TextEditingController();
   TextEditingController passwordField = TextEditingController();
   bool register = false;
@@ -21,7 +21,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    auth = Provider.of<Authentication>(context);
+    auth = Provider.of<API>(context);
   }
 
   void handleAccess() async {

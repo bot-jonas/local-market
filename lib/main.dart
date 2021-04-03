@@ -10,8 +10,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider<Authentication>(
-      create: (_) => Authentication.instance,
+    return Provider<API>(
+      create: (_) => API.instance,
       child: MaterialApp(
         title: 'Local Market',
         home: AuthenticationScreen(),
