@@ -106,4 +106,33 @@ class API {
       return data;
     }
   }
+
+  Future<Map<String, dynamic>> updateEnterprise(
+      {name, category, deliveryTime, deliveryFee}) async {
+    String url = "https://jonasalves.cf/apis/local_market/update_user";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    Map<String, dynamic> body = {
+      "name": name,
+      "e_category": category,
+      "e_delivery_time": deliveryTime,
+      "e_delivery_fee": deliveryFee
+    };
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser = User.fromJson(data["user"]);
+      }
+
+      return data;
+    }
+  }
 }
