@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
+import 'package:local_market/screens/enterprise/configurations.dart';
 import 'package:provider/provider.dart';
 import 'package:local_market/utils/authentication.dart';
+
+enum OptionsMenu { configurations, logout }
 
 class EnterpriseScreen extends StatefulWidget {
   @override
@@ -23,20 +26,52 @@ class _EnterpriseScreenState extends State<EnterpriseScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Empresa"),
-      ),
-      body: Center(
-        child: IconButton(
-          icon: Icon(Icons.logout),
-          onPressed: () {
-            auth.logout();
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: Icon(
+                Icons.search,
+                size: 26.0,
+              ),
+            ),
+          ),
+          PopupMenuButton<OptionsMenu>(
+            onSelected: (value) {
+              switch (value) {
+                case OptionsMenu.configurations:
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EnterpriseConfigurationsScreen()));
+                  break;
+                case OptionsMenu.logout:
+                  auth.logout();
 
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => AuthenticationScreen()),
-            );
-          },
-        ),
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AuthenticationScreen()),
+                  );
+                  break;
+              }
+            },
+            itemBuilder: (context) => <PopupMenuItem<OptionsMenu>>[
+              const PopupMenuItem<OptionsMenu>(
+                value: OptionsMenu.configurations,
+                child: Text("Configurações"),
+              ),
+              const PopupMenuItem<OptionsMenu>(
+                value: OptionsMenu.logout,
+                child: Text("Sair"),
+              ),
+            ],
+          ),
+        ],
       ),
+      body: Container(),
     );
   }
 }
