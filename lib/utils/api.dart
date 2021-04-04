@@ -10,6 +10,8 @@ class User {
   int eDeliveryTime;
   double eDeliveryFee;
 
+  List products = [];
+
   User(
     this.email,
     this.userType, {
@@ -130,6 +132,116 @@ class API {
 
       if (data["OK"]) {
         currentUser = User.fromJson(data["user"]);
+      }
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> getProducts() async {
+    String url = "https://jonasalves.cf/apis/local_market/get_products";
+
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    HTTP.Response r = await HTTP.get(Uri.parse(url), headers: headers);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser.products = data["products"];
+      }
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> registerProduct(
+      {name, description, price}) async {
+    String url = "https://jonasalves.cf/apis/local_market/register_product";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    Map<String, dynamic> body = {
+      "name": name,
+      "description": description,
+      "price": price
+    };
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser.products.insert(0, {
+          "id": data["id"],
+          "name": name,
+          "description": description,
+          "price": price
+        });
+      }
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> updateProduct(
+      {id, name, description, price}) async {
+    String url = "https://jonasalves.cf/apis/local_market/update_product";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    Map<String, dynamic> body = {
+      "id": id,
+      "name": name,
+      "description": description,
+      "price": price
+    };
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        int idx = currentUser.products.indexWhere((p) => p["id"] == id);
+        currentUser.products[idx] = {
+          "id": id,
+          "name": data["product"]["name"],
+          "description": data["product"]["description"],
+          "price": data["product"]["price"]
+        };
+      }
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteProduct({id}) async {
+    String url = "https://jonasalves.cf/apis/local_market/delete_product/$id";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+
+    HTTP.Response r = await HTTP.delete(Uri.parse(url), headers: headers);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser.products.removeWhere((p) => p["id"] == id);
       }
 
       return data;

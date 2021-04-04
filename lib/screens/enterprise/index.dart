@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
 import 'package:local_market/screens/enterprise/configurations.dart';
+import 'package:local_market/screens/enterprise/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:local_market/utils/api.dart';
 
@@ -30,10 +31,15 @@ class _EnterpriseScreenState extends State<EnterpriseScreen> {
           Padding(
             padding: EdgeInsets.only(right: 10.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EnterpriseInventoryScreen()));
+              },
               child: Icon(
-                Icons.search,
-                size: 26.0,
+                Icons.inventory,
+                size: 24.0,
               ),
             ),
           ),
