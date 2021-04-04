@@ -8,7 +8,7 @@ class User {
   String cAddress;
   String eCategory;
   int eDeliveryTime;
-  int eDeliveryFee;
+  double eDeliveryFee;
 
   User(
     this.email,
@@ -26,8 +26,8 @@ class User {
         userType = json['user_type'],
         cAddress = json['c_address'],
         eCategory = json['e_category'],
-        eDeliveryFee = json['e_delivery_fee'],
-        eDeliveryTime = json['e_delivery_time'];
+        eDeliveryFee = double.parse(json['e_delivery_fee']),
+        eDeliveryTime = int.parse(json['e_delivery_time']);
 }
 
 class API {

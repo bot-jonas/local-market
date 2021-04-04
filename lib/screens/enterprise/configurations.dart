@@ -70,8 +70,10 @@ class _EnterpriseConfigurationsScreenState
     if (!initialized) {
       nameField.text = api.currentUser.name;
       categoryField.text = api.currentUser.eCategory;
-      deliveryFeeField.text = api.currentUser.eDeliveryFee.toString();
-      deliveryTimeField.text = api.currentUser.eDeliveryTime.toString();
+      if (api.currentUser.eDeliveryFee > 0)
+        deliveryFeeField.text = api.currentUser.eDeliveryFee.toString();
+      if (api.currentUser.eDeliveryTime > 0)
+        deliveryTimeField.text = api.currentUser.eDeliveryTime.toString();
       initialized = true;
     }
 
