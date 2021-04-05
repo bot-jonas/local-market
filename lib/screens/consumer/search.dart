@@ -66,7 +66,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
       "description": item.widget.description,
       "price": item.widget.price,
       "image": item.widget.image,
-      "enterprise_id": item.widget.enterpriseId,
+      "enterprise": item.widget.enterprise,
       "quantity": 1
     });
 
@@ -140,7 +140,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
               description: r["description"],
               price: r["price"],
               image: "",
-              enterpriseId: r["enterprise_id"],
+              enterprise: r["enterprise"],
               addToCart: addToCart,
               removeFromCart: removeFromCart,
               initialSelected:
@@ -162,7 +162,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
                 description: r["description"],
                 price: r["price"],
                 image: "",
-                enterpriseId: r["enterprise_id"],
+                enterprise: r["enterprise"],
                 incrementCart: incrementCart,
                 decrementCart: decrementCart,
                 quantity: r["quantity"],
@@ -217,7 +217,7 @@ class Result extends StatefulWidget {
   final String description;
   final String price;
   final String image;
-  final String enterpriseId;
+  final dynamic enterprise;
   final Function addToCart;
   final Function removeFromCart;
   final bool initialSelected;
@@ -228,7 +228,7 @@ class Result extends StatefulWidget {
       this.description,
       this.price,
       this.image,
-      this.enterpriseId,
+      this.enterprise,
       this.addToCart,
       this.removeFromCart,
       this.initialSelected});
@@ -316,6 +316,7 @@ class _ResultState extends State<Result> {
                       ],
                     ),
                     Text(descriptionFormatted),
+                    Text("Empresa: " + this.widget.enterprise["name"]),
                     Text(
                       'R\$ ' + this.widget.price.toString(),
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -337,7 +338,7 @@ class CartItem extends StatefulWidget {
   final String description;
   final String price;
   final String image;
-  final String enterpriseId;
+  final dynamic enterprise;
   final Function incrementCart;
   final Function decrementCart;
   final int quantity;
@@ -348,7 +349,7 @@ class CartItem extends StatefulWidget {
     this.description,
     this.price,
     this.image,
-    this.enterpriseId,
+    this.enterprise,
     this.incrementCart,
     this.decrementCart,
     this.quantity,
@@ -416,6 +417,7 @@ class _CartItemState extends State<CartItem> {
                       ],
                     ),
                     Text(descriptionFormatted),
+                    Text("Empresa: " + this.widget.enterprise["name"]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

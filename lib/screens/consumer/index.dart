@@ -123,7 +123,7 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
                 description: r["description"],
                 price: r["price"],
                 image: "",
-                enterpriseId: r["enterprise_id"],
+                enterprise: r["enterprise"],
                 incrementCart: incrementCart,
                 decrementCart: decrementCart,
                 quantity: r["quantity"],
@@ -178,7 +178,7 @@ class CartItem extends StatefulWidget {
   final String description;
   final String price;
   final String image;
-  final String enterpriseId;
+  final dynamic enterprise;
   final Function incrementCart;
   final Function decrementCart;
   final int quantity;
@@ -189,7 +189,7 @@ class CartItem extends StatefulWidget {
     this.description,
     this.price,
     this.image,
-    this.enterpriseId,
+    this.enterprise,
     this.incrementCart,
     this.decrementCart,
     this.quantity,
@@ -257,6 +257,7 @@ class _CartItemState extends State<CartItem> {
                       ],
                     ),
                     Text(descriptionFormatted),
+                    Text("Empresa: " + this.widget.enterprise["name"]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
