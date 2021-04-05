@@ -358,10 +358,47 @@ class API {
     }
   }
 
+  Future<Map<String, dynamic>> getEnterpriseOrders() async {
+    String url =
+        "https://jonasalves.cf/apis/local_market/get_orders/enterprise";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+
+    HTTP.Response r = await HTTP.get(Uri.parse(url), headers: headers);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      return data;
+    }
+  }
+
   Future<Map<String, dynamic>> cancelOrder({id}) async {
     String url = "https://jonasalves.cf/apis/local_market/update_order";
     Map<String, String> headers = {"Authorization": "Bearer $jwt"};
     Map<String, String> body = {"order_id": id, "status": "CANCELED"};
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> closeOrder({id}) async {
+    String url = "https://jonasalves.cf/apis/local_market/update_order";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+    Map<String, String> body = {"order_id": id, "status": "CLOSED"};
 
     HTTP.Response r =
         await HTTP.post(Uri.parse(url), headers: headers, body: body);
