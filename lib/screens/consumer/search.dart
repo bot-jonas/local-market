@@ -171,9 +171,29 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Total: R\$ " + api.currentUser.total.toStringAsFixed(2),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Compras: R\$ " +
+                          api.currentUser.total.toStringAsFixed(2),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Entregas: R\$ " +
+                          api.currentUser.deliveryFee.toStringAsFixed(2),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Total: R\$ " +
+                          api.currentUser.totalWithDeliveryFee
+                              .toStringAsFixed(2),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
                 ElevatedButton(
                   onPressed: () {

@@ -22,6 +22,38 @@ class User {
     return t;
   }
 
+  double get deliveryFee {
+    var enterprises = {};
+
+    double t = 0;
+    for (var c in cart) {
+      if (enterprises[c["enterprise"]["email"]] == null) {
+        enterprises[c["enterprise"]["email"]] = 1;
+
+        t += double.parse(c["enterprise"]["e_delivery_fee"]);
+      }
+    }
+
+    return t;
+  }
+
+  double get totalWithDeliveryFee {
+    var enterprises = {};
+
+    double t = 0;
+    for (var c in cart) {
+      t += c["quantity"] * double.parse(c["price"]);
+
+      if (enterprises[c["enterprise"]["email"]] == null) {
+        enterprises[c["enterprise"]["email"]] = 1;
+
+        t += double.parse(c["enterprise"]["e_delivery_fee"]);
+      }
+    }
+
+    return t;
+  }
+
   User(
     this.email,
     this.userType, {
