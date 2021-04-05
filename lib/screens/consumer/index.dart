@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:local_market/screens/authentication/index.dart';
 import 'package:local_market/screens/consumer/configurations.dart';
+import 'package:local_market/screens/consumer/search.dart';
 import 'package:provider/provider.dart';
 import 'package:local_market/utils/api.dart';
 
@@ -30,7 +33,12 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
           Padding(
             padding: EdgeInsets.only(right: 10.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConsumerSearchScreen()));
+              },
               child: Icon(
                 Icons.search,
                 size: 26.0,
@@ -71,7 +79,9 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
           ),
         ],
       ),
-      body: Container(),
+      body: Center(
+        child: Text("Adicionar lista de pedidos, e tela do carrinho"),
+      ),
     );
   }
 }

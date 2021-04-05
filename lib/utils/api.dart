@@ -11,6 +11,16 @@ class User {
   double eDeliveryFee;
 
   List products = [];
+  List cart = [];
+
+  double get total {
+    double t = 0;
+    for (var c in cart) {
+      t += c["quantity"] * double.parse(c["price"]);
+    }
+
+    return t;
+  }
 
   User(
     this.email,
@@ -243,6 +253,23 @@ class API {
       if (data["OK"]) {
         currentUser.products.removeWhere((p) => p["id"] == id);
       }
+
+      return data;
+    }
+  }
+
+  Future<Map<String, dynamic>> search({q}) async {
+    String url = "https://jonasalves.cf/apis/local_market/search?q=$q";
+    Map<String, String> headers = {"Authorization": "Bearer $jwt"};
+
+    HTTP.Response r = await HTTP.get(Uri.parse(url), headers: headers);
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
 
       return data;
     }
