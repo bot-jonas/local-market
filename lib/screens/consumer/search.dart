@@ -168,44 +168,46 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
                 quantity: r["quantity"],
               );
             }).toList()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Compras: R\$ " +
-                          api.currentUser.total.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Entregas: R\$ " +
-                          api.currentUser.deliveryFee.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Total: R\$ " +
-                          api.currentUser.totalWithDeliveryFee
-                              .toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PlaceOrderScreen()));
-                  },
-                  child: Text("Finalizar compra"),
-                )
-              ],
-            )
+            (api.currentUser.cart.length > 0)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Compras: R\$ " +
+                                api.currentUser.total.toStringAsFixed(2),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Entregas: R\$ " +
+                                api.currentUser.deliveryFee.toStringAsFixed(2),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Total: R\$ " +
+                                api.currentUser.totalWithDeliveryFee
+                                    .toStringAsFixed(2),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlaceOrderScreen()));
+                        },
+                        child: Text("Finalizar compra"),
+                      )
+                    ],
+                  )
+                : Text("Carrinho Vazio!")
           ],
         ),
       ),
