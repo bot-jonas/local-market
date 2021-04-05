@@ -33,6 +33,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
         name: nameField.text,
         description: descriptionField.text,
         price: priceField.text,
+        image: "",
       );
 
       ScaffoldMessenger.of(context)

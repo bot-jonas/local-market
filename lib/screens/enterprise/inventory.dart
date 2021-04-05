@@ -90,7 +90,7 @@ class _EnterpriseInventoryScreenState extends State<EnterpriseInventoryScreen> {
                           name: p["name"],
                           description: p["description"],
                           price: double.parse(p["price"]),
-                          image: "",
+                          image: p["image"],
                           iAmBack: () {
                             setState(() {});
                           },
@@ -141,6 +141,8 @@ class _InventoryItemState extends State<InventoryItem> {
       descriptionFormatted = descriptionFormatted.substring(0, 60 - 3);
       descriptionFormatted += "...";
     }
+
+    print(this.widget.image);
 
     return Card(
       elevation: 2,

@@ -139,7 +139,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
               name: r["name"],
               description: r["description"],
               price: r["price"],
-              image: "",
+              image: r["image"],
               enterprise: r["enterprise"],
               addToCart: addToCart,
               removeFromCart: removeFromCart,

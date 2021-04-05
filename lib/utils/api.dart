@@ -202,13 +202,14 @@ class API {
   }
 
   Future<Map<String, dynamic>> registerProduct(
-      {name, description, price}) async {
+      {name, description, price, image}) async {
     String url = "https://jonasalves.cf/apis/local_market/register_product";
     Map<String, String> headers = {"Authorization": "Bearer $jwt"};
     Map<String, dynamic> body = {
       "name": name,
       "description": description,
-      "price": price
+      "price": price,
+      "image": image
     };
 
     HTTP.Response r =
@@ -225,6 +226,7 @@ class API {
         currentUser.products.insert(0, {
           "id": data["id"],
           "name": name,
+          "image": image,
           "description": description,
           "price": price
         });
