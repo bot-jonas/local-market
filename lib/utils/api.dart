@@ -306,4 +306,38 @@ class API {
       return data;
     }
   }
+
+  Future<Map<String, dynamic>> placeOrder({paymentMethod}) async {
+    String url = "https://jonasalves.cf/apis/local_market/place_order";
+    Map<String, String> headers = {
+      "Authorization": "Bearer $jwt",
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+
+    String body = jsonEncode({
+      "cart": currentUser.cart,
+      "payment_method": paymentMethod,
+    });
+
+    print("abc");
+
+    HTTP.Response r =
+        await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+    print("lol");
+
+    if (r.statusCode == 401) {
+      logout();
+
+      return {"OK": false, "message": "Sessão expirada!"};
+    } else {
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      if (data["OK"]) {
+        currentUser.cart = [];
+      }
+
+      return data;
+    }
+  }
 }
