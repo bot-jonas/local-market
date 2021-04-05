@@ -88,7 +88,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => nextScreen),
-          ModalRoute.withName('/'),
+          (Route<dynamic> route) => false,
         );
       });
 
