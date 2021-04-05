@@ -61,9 +61,10 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       });
 
       if (!data["OK"] && api.currentUser == null) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+          (Route<dynamic> route) => false,
         );
       } else {
         Navigator.pop(context);
@@ -95,9 +96,10 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       });
 
       if (!data["OK"] && api.currentUser == null) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+          (Route<dynamic> route) => false,
         );
       } else if (!data["OK"]) {
         api.currentUser.products

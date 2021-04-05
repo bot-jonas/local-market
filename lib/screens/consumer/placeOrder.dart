@@ -91,17 +91,18 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
       });
 
       if (!data["OK"] && api.currentUser == null) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+          (Route<dynamic> route) => false,
         );
       }
 
       if (data["OK"]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ConsumerScreen()),
-        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ConsumerScreen()),
+            ModalRoute.withName('/'));
       }
     }
   }

@@ -85,9 +85,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       }
 
       Future.delayed(Duration(milliseconds: 1), () {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => nextScreen),
+          ModalRoute.withName('/'),
         );
       });
 

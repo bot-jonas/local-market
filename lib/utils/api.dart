@@ -319,12 +319,8 @@ class API {
       "payment_method": paymentMethod,
     });
 
-    print("abc");
-
     HTTP.Response r =
         await HTTP.post(Uri.parse(url), headers: headers, body: body);
-
-    print("lol");
 
     if (r.statusCode == 401) {
       logout();

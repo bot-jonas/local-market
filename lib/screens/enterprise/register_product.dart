@@ -46,9 +46,10 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
       });
 
       if (!data["OK"] && api.currentUser == null) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+          (Route<dynamic> route) => false,
         );
       } else {
         nameField.text = "";

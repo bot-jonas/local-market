@@ -33,9 +33,10 @@ class _EnterpriseInventoryScreenState extends State<EnterpriseInventoryScreen> {
           snackbarLocked = false;
         });
         Future.delayed(Duration(milliseconds: 1), () {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+            (Route<dynamic> route) => false,
           );
         });
       } else {
