@@ -179,6 +179,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                     "Excluir produto",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     onPressed: handleDelete,
                     child: Text(

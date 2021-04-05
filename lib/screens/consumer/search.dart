@@ -66,7 +66,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
       "description": item.widget.description,
       "price": item.widget.price,
       "image": item.widget.image,
-      "enterprise_id": item.widget.enterprise_id,
+      "enterprise_id": item.widget.enterpriseId,
       "quantity": 1
     });
 
@@ -140,7 +140,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
               description: r["description"],
               price: r["price"],
               image: "",
-              enterprise_id: r["enterprise_id"],
+              enterpriseId: r["enterprise_id"],
               addToCart: addToCart,
               removeFromCart: removeFromCart,
               initialSelected:
@@ -162,7 +162,7 @@ class _ConsumerSearchScreenState extends State<ConsumerSearchScreen> {
                 description: r["description"],
                 price: r["price"],
                 image: "",
-                enterprise_id: r["enterprise_id"],
+                enterpriseId: r["enterprise_id"],
                 incrementCart: incrementCart,
                 decrementCart: decrementCart,
                 quantity: r["quantity"],
@@ -217,7 +217,7 @@ class Result extends StatefulWidget {
   final String description;
   final String price;
   final String image;
-  final String enterprise_id;
+  final String enterpriseId;
   final Function addToCart;
   final Function removeFromCart;
   final bool initialSelected;
@@ -228,7 +228,7 @@ class Result extends StatefulWidget {
       this.description,
       this.price,
       this.image,
-      this.enterprise_id,
+      this.enterpriseId,
       this.addToCart,
       this.removeFromCart,
       this.initialSelected});
@@ -337,7 +337,7 @@ class CartItem extends StatefulWidget {
   final String description;
   final String price;
   final String image;
-  final String enterprise_id;
+  final String enterpriseId;
   final Function incrementCart;
   final Function decrementCart;
   final int quantity;
@@ -348,7 +348,7 @@ class CartItem extends StatefulWidget {
     this.description,
     this.price,
     this.image,
-    this.enterprise_id,
+    this.enterpriseId,
     this.incrementCart,
     this.decrementCart,
     this.quantity,
