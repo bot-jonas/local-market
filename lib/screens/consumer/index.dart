@@ -20,6 +20,8 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
   var appBars = [];
   var bodies = [];
 
+  var orders = [];
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -47,8 +49,51 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
     });
   }
 
+  bool snackbarLocked = false;
+
+  void handleCancel(id) async {
+    if (!snackbarLocked) {
+      snackbarLocked = true;
+
+      var data = await api.cancelOrder(id: id);
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(
+            duration: const Duration(seconds: 1),
+            content: Text(data["message"]),
+          ))
+          .closed
+          .then((reason) {
+        snackbarLocked = false;
+      });
+
+      if (!data["OK"] && api.currentUser == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AuthenticationScreen()),
+        );
+      } else {
+        setState(() {
+          initialized = false;
+        });
+      }
+    }
+  }
+
+  bool initialized = false;
+
   @override
   Widget build(BuildContext context) {
+    if (!initialized) {
+      api.getConsumerOrders().then((data) => {
+            setState(() {
+              orders = data["orders"];
+            })
+          });
+
+      initialized = true;
+    }
+
     appBars = [
       AppBar(
         title: Text("Usuário"),
@@ -108,8 +153,36 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
     ];
 
     bodies = [
-      Center(
-        child: Text("Adicionar lista de pedidos"),
+      Container(
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            var data = await api.getConsumerOrders();
+            setState(() {
+              orders = data["orders"];
+            });
+          },
+          child: ListView(
+            children: [
+              Text(
+                "Meus pedidos",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: orders
+                    .map((o) => OrderItem(
+                          id: o["id"],
+                          enterpriseName: o["enterpriseName"],
+                          paymentMethod: o["paymentMethod"],
+                          status: o["status"],
+                          total: o["total"],
+                          handleCancel: handleCancel,
+                        ))
+                    .toList(),
+              )
+            ],
+          ),
+        ),
       ),
       Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -322,6 +395,84 @@ class _CartItemState extends State<CartItem> {
                 ),
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class OrderItem extends StatelessWidget {
+  final String id;
+  final String enterpriseName;
+  final String total;
+  final String paymentMethod;
+  final String status;
+  final Function handleCancel;
+
+  OrderItem({
+    this.id,
+    this.enterpriseName,
+    this.total,
+    this.paymentMethod,
+    this.status,
+    this.handleCancel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Pedido #$id",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                (status == "ORDERED")
+                    ? Row(
+                        children: [
+                          Text(
+                            "Cancelar",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                handleCancel(this.id);
+                              },
+                              icon: Icon(
+                                Icons.close,
+                                color: Colors.red,
+                              ))
+                        ],
+                      )
+                    : Container()
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text("Empresa: $enterpriseName"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child:
+                  Text("Valor: R\$ " + double.parse(total).toStringAsFixed(2)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text("Método de pagamento: $paymentMethod"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text("Status: $status"),
+            ),
           ],
         ),
       ),
