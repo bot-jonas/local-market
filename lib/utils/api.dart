@@ -434,12 +434,25 @@ class API {
 
       Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
 
-      upload = {
-        "OK": true,
-        "message": "Upload feito com sucesso!",
-        "data": data["data"]
-      };
+      print(data);
+
+      if (data["success"]) {
+        upload = {
+          "OK": true,
+          "message": "Upload feito com sucesso!",
+          "data": data["data"]
+        };
+      } else {
+        upload = {
+          "OK": false,
+          "message": (data["data"]["error"]["code"] == 1003)
+              ? "Apenas jpg e png são suportados!"
+              : data["data"]["error"]["message"],
+          "data": data["data"]
+        };
+      }
     } catch (e) {
+      print(e);
       upload = {"OK": false, "message": "Não foi possível fazer o upload"};
     }
 

@@ -32,6 +32,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
 
   handleSave() async {
     FocusScope.of(context).unfocus();
+    var upload;
 
     if (!snackbarLocked) {
       snackbarLocked = true;
@@ -44,7 +45,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
           uploading = true;
         });
 
-        var upload = await api.uploadImage(image: _image);
+        upload = await api.uploadImage(image: _image);
 
         setState(() {
           uploading = false;
@@ -63,6 +64,10 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
             .then((reason) {
           snackbarLocked = false;
         });
+      }
+
+      if (upload != null && !upload["OK"]) {
+        return;
       }
 
       var data = await api.registerProduct(
@@ -107,27 +112,32 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
 
     if (pickedFile != null) {
       final File file = File(pickedFile.path);
-      final len = await file.length();
+      final int len = await file.length();
+      final String ext = pickedFile.path.split(".").last.toLowerCase();
+      String message;
 
-      if (len < MAX_IMAGE_FILE_SIZE_MB * 1000 * 1000) {
-        // 1000 instead of 1024 ...
+      if (ext != "png" && ext != "jpg") {
+        message = "Apenas imagens jpg e png são suportadas!";
+      } else if (len > MAX_IMAGE_FILE_SIZE_MB * 1000 * 1000) {
+        message = "Imagens devem ser menores que ${MAX_IMAGE_FILE_SIZE_MB}MB";
+      } else {
         setState(() {
           _image = file;
         });
-      } else {
-        if (!snackbarLocked) {
-          snackbarLocked = true;
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(
-                duration: const Duration(seconds: 1),
-                content: Text(
-                    "Imagens devem ser menores que ${MAX_IMAGE_FILE_SIZE_MB}MB"),
-              ))
-              .closed
-              .then((reason) {
-            snackbarLocked = false;
-          });
-        }
+        return;
+      }
+
+      if (!snackbarLocked) {
+        snackbarLocked = true;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Text(message),
+            ))
+            .closed
+            .then((reason) {
+          snackbarLocked = false;
+        });
       }
     }
   }
@@ -212,6 +222,11 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
                   style: TextStyle(fontSize: 14, color: Colors.white)),
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(
+              "*Apenas imagens jpg e png com menos de 20MB são suportadas"),
         )
       ],
     );
