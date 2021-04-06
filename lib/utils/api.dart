@@ -237,13 +237,14 @@ class API {
   }
 
   Future<Map<String, dynamic>> updateProduct(
-      {id, name, description, price}) async {
+      {id, name, image, description, price}) async {
     String url = "https://jonasalves.cf/apis/local_market/update_product";
     Map<String, String> headers = {"Authorization": "Bearer $jwt"};
     Map<String, dynamic> body = {
       "id": id,
       "name": name,
       "description": description,
+      "image": image,
       "price": price
     };
 
@@ -263,6 +264,7 @@ class API {
           "id": id,
           "name": data["product"]["name"],
           "description": data["product"]["description"],
+          "image": data["product"]["image"],
           "price": data["product"]["price"]
         };
       }

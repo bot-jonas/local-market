@@ -82,6 +82,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
         id: this.widget.id.toString(),
         name: nameField.text,
         description: descriptionField.text,
+        image: "",
         price: priceField.text,
       );
 

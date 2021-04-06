@@ -142,8 +142,6 @@ class _InventoryItemState extends State<InventoryItem> {
       descriptionFormatted += "...";
     }
 
-    print(this.widget.image);
-
     return Card(
       elevation: 2,
       child: Container(
