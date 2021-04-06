@@ -229,7 +229,7 @@ class API {
           "name": name,
           "image": image,
           "description": description,
-          "price": price
+          "price": (price == "") ? "0" : price
         });
       }
 
