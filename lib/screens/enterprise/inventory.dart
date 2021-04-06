@@ -206,7 +206,7 @@ class _InventoryItemState extends State<InventoryItem> {
                     ),
                     Text(descriptionFormatted),
                     Text(
-                      'R\$ ' + this.widget.price.toString(),
+                      'R\$ ' + this.widget.price.toStringAsFixed(2),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
                   ],

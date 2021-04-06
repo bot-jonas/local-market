@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as HTTP;
 
 class User {
@@ -412,5 +413,36 @@ class API {
 
       return data;
     }
+  }
+
+  Future<Map<String, dynamic>> uploadImage({File image}) async {
+    String url = "https://api.imgur.com/3/image";
+    Map<String, String> headers = {
+      "Authorization": "Client-ID 8f464ccaef4fabc"
+    };
+
+    var upload;
+
+    try {
+      List<int> bytes = await image.readAsBytes();
+      String b64 = base64Encode(bytes);
+
+      Map<String, String> body = {"image": b64};
+
+      HTTP.Response r =
+          await HTTP.post(Uri.parse(url), headers: headers, body: body);
+
+      Map<String, dynamic> data = jsonDecode(utf8.decode(r.bodyBytes));
+
+      upload = {
+        "OK": true,
+        "message": "Upload feito com sucesso!",
+        "data": data["data"]
+      };
+    } catch (e) {
+      upload = {"OK": false, "message": "Não foi possível fazer o upload"};
+    }
+
+    return upload;
   }
 }
