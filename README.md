@@ -1,7 +1,7 @@
 # Local Market
 
-Os arquivos finais do projeto estão na pasta [trabalho](./trabalho).  
-A transcrição do arquivo [Relatório.pdf](./trabalho/Relatório.pdf) é dada abaixo.
+Os arquivos finais do projeto estão na pasta [./trabalho](./trabalho).  
+A transcrição do arquivo [./trabalho/Relatório.pdf](./trabalho/Relatório.pdf) é dada abaixo.
 
 ## Relatório
 Integrantes:  
