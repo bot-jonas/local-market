@@ -85,8 +85,6 @@ Analisando a parte de gastos teremos despesas com:
 | Contabilidade          | $100,00   |
 | Material de escritório | $50,00    |
 | Hospedagem site        | $50,00    |
-| Gasto A                | $0,00     |
-| Gasto B                | $0,00     |
 
 Já na parte de gastos com mão de obra/pessoal por não termos um capital inicial e
 dependermos apenas das receitas A e B tentaremos por meio de acordos estipular um
@@ -100,7 +98,7 @@ outros serviços. Tendo assim:
 | Growth Hacking      | $0,00          | 0   | $0,00     |
 | Marketing           | $500,00        | 1   | $500,00   |
 | Web Designer        | $500,00        | 1   | $500,00   |
-| Pro-laboe           | $0,00          | 0   | $0,00     |
+| Pro-labore           | $0,00          | 0   | $0,00     |
 | Suporte             | $0,00          | 0   | $0,00     |
 
 A ideia seria ter Programadores para ajudar no desenvolvimento do site, Growth
