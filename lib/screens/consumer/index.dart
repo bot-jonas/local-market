@@ -197,7 +197,7 @@ class _ConsumerScreenState extends State<ConsumerScreen> {
                 name: r["name"],
                 description: r["description"],
                 price: r["price"],
-                image: "",
+                image: r["image"],
                 enterprise: r["enterprise"],
                 incrementCart: incrementCart,
                 decrementCart: decrementCart,
